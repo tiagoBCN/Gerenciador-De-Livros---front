@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getLivros } from "@/lib/api";
+import { getLivros } from "@/lib/livros";
 import {
   PieChart,
   Pie,
@@ -22,7 +22,8 @@ export default function GraficoLivros() {
 
   useEffect(() => {
     async function fetchData() {
-      const livros = await getLivros();
+      const response = await getLivros(1, 1000);
+      const livros = response.data;
       const lidos = livros.filter((livro: any) => livro.lido).length;
       const naoLidos = livros.length - lidos;
 

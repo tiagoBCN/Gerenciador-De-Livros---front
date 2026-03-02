@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getLivros } from "@/lib/api";
+import { getLivros } from "@/lib/livros";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import GraficoLivros from "@/components/graficosLivros";
@@ -41,12 +41,11 @@ export default function Dashboard() {
 
     async function fetchDados() {
       try {
-        const livros = await getLivros();
+        const response = await getLivros(1, 1000);
+        const livros = response.data;
 
         setTotal(livros.length);
-        const lidosCount = livros.filter(
-          (livro: any) => livro.lido
-        ).length;
+        const lidosCount = livros.filter((livro: any) => livro.lido).length;
 
         setLidos(lidosCount);
         setNaoLidos(livros.length - lidosCount);
@@ -70,9 +69,7 @@ export default function Dashboard() {
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">
-            Olá, {userName} 
-          </h1>
+          <h1 className="text-2xl font-bold">Olá, {userName}</h1>
           <p className="text-muted-foreground">
             Bem-vindo ao seu painel de livros
           </p>
@@ -89,9 +86,7 @@ export default function Dashboard() {
             <CardTitle>Total de Livros</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-semibold">
-              {loading ? "..." : total}
-            </p>
+            <p className="text-2xl font-semibold">{loading ? "..." : total}</p>
           </CardContent>
         </Card>
 
@@ -100,9 +95,7 @@ export default function Dashboard() {
             <CardTitle>Livros Lidos</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-semibold">
-              {loading ? "..." : lidos}
-            </p>
+            <p className="text-2xl font-semibold">{loading ? "..." : lidos}</p>
           </CardContent>
         </Card>
 
@@ -120,26 +113,19 @@ export default function Dashboard() {
 
       <div className="flex flex-col md:flex-row gap-6 pt-6">
         <div className="flex-1 space-x-2">
-          <Button onClick={() => router.push("/livros")}>
-            Ver Livros
-          </Button>
+          <Button onClick={() => router.push("/livros")}>Ver Livros</Button>
 
-          <Button
-            onClick={() => router.push("/livros/novo")}
-            variant="outline"
-          >
+          <Button onClick={() => router.push("/livros/novo")} variant="outline">
             Adicionar Novo Livro
           </Button>
         </div>
 
-    {total != 0 &&
-    <div className="flex-1">
-          <h2 className="text-xl font-semibold mb-4">
-            Status dos Livros
-          </h2>
-          <GraficoLivros />
-        </div>
-    }
+        {total != 0 && (
+          <div className="flex-1">
+            <h2 className="text-xl font-semibold mb-4">Status dos Livros</h2>
+            <GraficoLivros />
+          </div>
+        )}
       </div>
 
       <div className="fixed right-4 bottom-4">

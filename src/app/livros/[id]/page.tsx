@@ -2,14 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { atualizarLivro, excluirLivro, getLivro } from "@/lib/api";
+import { atualizarLivro, excluirLivro, getLivro } from "@/lib/livros";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function EditarLivro() {
   const { id } = useParams();
   const router = useRouter();
-  const [form, setForm] = useState({ titulo: "", autor: "", ano: "", lido: false });
+  const [form, setForm] = useState({
+    titulo: "",
+    autor: "",
+    ano: "",
+    lido: false,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

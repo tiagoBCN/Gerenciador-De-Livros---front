@@ -1,22 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { getLivros } from "@/lib/api";
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/mode-toggle";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { getLivros } from "@/lib/livros";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Pagination } from "@/components/Pagination";
+
+interface Livro {
+  id: number;
+  titulo: string;
+  autor: string;
+  ano: number;
+  lido: boolean;
+}
+
 export default function ListaLivros() {
-  const [livros, setLivros] = useState<any[]>([]);
+  const [livros, setLivros] = useState<Livro[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
+
   const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getLivros();
-        setLivros(data);
+        setLoading(true);
+
+        const response = await getLivros(page, 5);
+
+        setLivros(response.data);
+        setLastPage(response.meta.lastPage);
       } catch (error) {
         console.error("Erro ao buscar livros:", error);
       } finally {
@@ -25,11 +42,11 @@ export default function ListaLivros() {
     }
 
     fetchData();
-  }, []);
+  }, [page]);
 
   return (
-    <main className="p-6 flex flex-col items-center justify-center min-h-screen w-full">
-      <div className="flex justify-between items-center w-1/2 mb-4">
+    <main className="p-6 flex flex-col items-center min-h-screen w-full">
+      <div className="flex justify-between items-center w-1/2 mb-6">
         <h1 className="text-2xl font-bold flex items-center gap-4">
           <Button variant="outline" onClick={() => router.back()}>
             ← Voltar
@@ -43,31 +60,40 @@ export default function ListaLivros() {
       </div>
 
       {loading ? (
-        <p className="mt-6 text-muted-foreground">Carregando livros...</p>
+        <p className="text-muted-foreground">Carregando livros...</p>
       ) : (
-        <ul className="mt-6 space-y-4 w-1/2">
-          {livros.length === 0 ? (
-            <li className="text-muted-foreground">Nenhum livro encontrado.</li>
-          ) : (
-            livros.map((livro) => (
-              <li
-                key={livro.id}
-                className="border p-4 rounded-md shadow flex justify-between items-center"
-              >
-                <div>
-                  <strong>{livro.titulo}</strong> - {livro.autor} ({livro.ano})
-                  <span className="ml-3">{livro.lido ? "✅ Lido" : "❌ Não lido"}</span>
-                </div>
-                <Link
-                  href={`/livros/${livro.id}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  Editar
-                </Link>
+        <>
+          <ul className="space-y-4 w-1/2">
+            {livros.length === 0 ? (
+              <li className="text-muted-foreground">
+                Nenhum livro encontrado.
               </li>
-            ))
-          )}
-        </ul>
+            ) : (
+              livros.map((livro) => (
+                <li
+                  key={livro.id}
+                  className="border p-4 rounded-md shadow flex justify-between items-center"
+                >
+                  <div>
+                    <strong>{livro.titulo}</strong> - {livro.autor} ({livro.ano}
+                    )
+                    <span className="ml-3">
+                      {livro.lido ? "✅ Lido" : "❌ Não lido"}
+                    </span>
+                  </div>
+
+                  <Link
+                    href={`/livros/${livro.id}`}
+                    className="text-blue-500 hover:underline"
+                  >
+                    Editar
+                  </Link>
+                </li>
+              ))
+            )}
+          </ul>
+          <Pagination page={page} lastPage={lastPage} onPageChange={setPage} />
+        </>
       )}
 
       <div className="fixed right-4 bottom-4">
