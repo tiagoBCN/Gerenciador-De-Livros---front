@@ -17,7 +17,8 @@ O projeto foi desenvolvido com foco em:
 🚀 Deploy em ambiente real (produção)
 
 🚀 Tecnologias Utilizadas
-🎨 Front-end
+
+Front-end:
 
 Next.js
 
@@ -31,7 +32,8 @@ Context API
 
 Deploy na Vercel
 
-⚙️ Back-end
+
+Back-end:
 
 Node.js
 
@@ -50,7 +52,8 @@ Deploy na Render
 🔗 Repositório do Back-end:
 https://github.com/tiagoBCN/Gerenciador-De-Livros---backend
 
-🗄️ Banco de Dados
+
+Banco de Dados:
 
 PostgreSQL (Supabase)
 
@@ -65,6 +68,7 @@ Proteção de rotas privadas
 
 Persistência de sessão no Front-end
 
+
 📚 Gerenciamento de Livros
 
 Criar livro com validação de dados
@@ -76,6 +80,7 @@ Atualizar informações
 Remover livro
 
 Associação entre Livro ↔ Usuário
+
 
 🔒 Segurança
 
