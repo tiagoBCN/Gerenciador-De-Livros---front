@@ -1,18 +1,20 @@
 📚 Gerenciador de Livros
 
-Aplicação full stack para gerenciamento de livros com autenticação de usuários, arquitetura separada (Front-end + API REST) e deploy em produção.
+Aplicação Full Stack para gerenciamento de livros, com autenticação de usuários, arquitetura separada (Front-end + API REST) e deploy em produção.
 
-Este projeto foi desenvolvido com foco em:
+O projeto foi desenvolvido com foco em:
 
-Boas práticas de arquitetura
+🏗️ Boas práticas de arquitetura
 
-Organização de código
+📂 Organização e padronização de código
 
-Integração com banco relacional
+🗄️ Integração com banco de dados relacional
 
-Autenticação segura
+🔐 Autenticação segura com JWT
 
-Deploy em ambiente real
+✅ Validação de dados no back-end
+
+🚀 Deploy em ambiente real (produção)
 
 🚀 Tecnologias Utilizadas
 🎨 Front-end
@@ -39,9 +41,14 @@ Prisma ORM
 
 PostgreSQL
 
+Zod (validação de dados)
+
 JWT para autenticação
 
 Deploy na Render
+
+🔗 Repositório do Back-end:
+https://github.com/tiagoBCN/Gerenciador-De-Livros---backend
 
 🗄️ Banco de Dados
 
@@ -52,31 +59,32 @@ PostgreSQL (Supabase)
 
 Cadastro de usuário
 
-Login com JWT
+Login com geração de JWT
 
 Proteção de rotas privadas
 
-Persistência de sessão
+Persistência de sessão no Front-end
 
 📚 Gerenciamento de Livros
 
-Criar livro
+Criar livro com validação de dados
 
-Listar livros
+Listar livros com paginação
 
 Atualizar informações
 
 Remover livro
 
-Associação livro ↔ usuário
+Associação entre Livro ↔ Usuário
 
 🔒 Segurança
 
-Senhas criptografadas
+Senhas criptografadas (hash seguro)
 
-Tokens JWT para autenticação
+Autenticação baseada em JWT
 
 Middleware de proteção de rotas
 
-Variáveis sensíveis via environment variables
+Validação de dados com Zod
 
+Variáveis sensíveis protegidas via Environment Variables
